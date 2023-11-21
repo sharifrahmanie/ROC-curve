@@ -18,6 +18,7 @@ model <- brglm(type ~.,data=train,
             family = binomial(link = "logit"))
 pred <- predict(model,test,type="response")
 pred <- prediction(pred, test$type)
+roc <- performance(pred, "tpr", "fpr")
 res <- data.frame(x = roc@x.values[[1]],
                   y = roc@y.values[[1]])
 ggplot(res, aes(x = x, y = y )) +
